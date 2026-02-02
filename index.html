@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Pixel Love Letter to You 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(to bottom, #ff85c0, #d81b60);
+            color: #fff;
+            text-align: center;
+            height: 100vh;
+            overflow: hidden;
+            image-rendering: pixelated;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #container {
+            width: 90%;
+            max-width: 900px;
+            padding: 4vw;
+            position: relative;
+        }
+        #question {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin: 5vh 0 8vh;
+            text-shadow: 0.3rem 0.3rem 0 #000;
+            line-height: 1.4;
+        }
+        button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            padding: 1rem 2.5rem;
+            margin: 1rem;
+            border: 0.4rem solid #fff;
+            background: linear-gradient(#ff4081, #c2185b);
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0.5rem 0 #000;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 10;
+            pointer-events: auto;
+        }
+        button:hover, button:active {
+            transform: translateY(-0.3rem);
+            box-shadow: 0 0.8rem 0 #000;
+        }
+        #no {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
+        .character {
+            width: clamp(100px, 25vw, 160px);
+            height: auto;
+            image-rendering: pixelated;
+            position: absolute;
+            top: 20vh;
+            filter: drop-shadow(0 0.5rem 0.8rem rgba(0,0,0,0.5));
+        }
+        #char-yes { left: 5%; animation: bounce 3s infinite ease-in-out; }
+        #char-no { right: 5%; display: none; }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10vh) scale(1.05, 0.95); }
+        }
+        #message {
+            display: none;
+            font-size: clamp(1rem, 3.5vw, 1.4rem);
+            line-height: 1.6;
+            margin-top: 5vh;
+            text-shadow: 0.15rem 0.15rem 0 #000;
+            opacity: 0;
+            transform: translateY(3rem);
+            transition: all 1.2s ease-out;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        #message.visible { opacity: 1; transform: translateY(0); }
+        #couple-image {
+            max-width: 90%;
+            max-height: 50vh;
+            width: auto;
+            height: auto;
+            margin: 3vh auto;
+            display: block;
+            border: 0.6rem solid #fff;
+            border-radius: 1rem;
+            box-shadow: 0 0 2rem rgba(255,105,180,0.7);
+            object-fit: contain;
+        }
+        .particle {
+            position: absolute;
+            width: clamp(32px, 8vw, 64px);
+            height: auto;
+            pointer-events: none;
+        }
+        .heart { animation: float-heart 6s linear infinite; opacity: 0; }
+        .kiss { animation: float-kiss 5s ease-in-out infinite; opacity: 0; }
+        @keyframes float-heart {
+            0% { transform: translateY(120vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.9; }
+            100% { transform: translateY(-30vh) rotate(900deg) scale(1.15); opacity: 0; }
+        }
+        @keyframes float-kiss {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.6); opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { transform: translateY(-40vh) rotate(1260deg) scale(1.2); opacity: 0; }
+        }
+        #music-control {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 100;
+            background: rgba(0,0,0,0.6);
+            border: 0.3rem solid #fff;
+            color: #fff;
+            padding: 0.6rem 1rem;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            cursor: pointer;
+            border-radius: 0.5rem;
+        }
+        @media (max-width: 600px) {
+            #container { padding: 3vw; }
+            #question { margin: 8vh 0 10vh; }
+            .character { top: 15vh; }
+            button { padding: 0.8rem 1.8rem; margin: 0.5rem; }
+            #message { font-size: clamp(0.9rem, 3.2vw, 1.1rem); padding: 0 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgm" loop preload="auto">
+        <source src="valentine-chiptune.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="music-control">♪ Play Chiptune</button>
+
+    <div id="container">
+        <div id="question">Will You Be My Valentine?</div>
+        <div id="buttons">
+            <button id="yes">YES!! 💕</button>
+            <button id="no">No...</button>
+        </div>
+
+        <img id="char-yes" class="character" src="happy-heart.png" alt="Happy pixel heart">
+        <img id="char-no" class="character" src="sad-heart.png" alt="Sad pixel heart">
+
+        <div id="message">
+            <p>My dearest love,<br>I adore everything about you — your laugh, your kindness, the way you make every day brighter.<br>I care for you deeply, protectively, endlessly.<br>I love you more than yesterday, and less than tomorrow.<br>You are my one, my only, forever.</p>
+            <img id="couple-image" src="couple.png" alt="Us together ❤️">
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgm');
+        const musicBtn = document.getElementById('music-control');
+        let isPlaying = false;
+        audio.volume = 0.35;
+
+        // Unlock audio on first user interaction
+        function unlockAudio() {
+            if (audio.paused && !isPlaying) {
+                audio.play().then(() => {
+                    musicBtn.textContent = 'Mute ♪';
+                    isPlaying = true;
+                }).catch(err => console.log('Play failed:', err.message));
+            }
+        }
+
+        document.body.addEventListener('click', unlockAudio, { once: true });
+        document.body.addEventListener('touchstart', unlockAudio, { once: true });
+
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.textContent = '♪ Play Chiptune';
+            } else {
+                audio.play().catch(err => console.log('Manual play error:', err));
+                musicBtn.textContent = 'Mute ♪';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        const yesBtn = document.getElementById('yes');
+        yesBtn.addEventListener('click', () => {
+            unlockAudio();
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('buttons').style.display = 'none';
+            document.getElementById('char-yes').style.display = 'none';
+            document.getElementById('message').style.display = 'block';
+            setTimeout(() => document.getElementById('message').classList.add('visible'), 150);
+
+            for (let i = 0; i < 35; i++) {
+                const h = document.createElement('img');
+                h.classList.add('particle', 'heart');
+                h.src = 'happy-heart.png';
+                h.style.left = Math.random() * 100 + '%';
+                h.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 12000);
+            }
+            for (let i = 0; i < 18; i++) {
+                const k = document.createElement('img');
+                k.classList.add('particle', 'kiss');
+                k.src = 'happy-heart.png';
+                k.style.left = Math.random() * 100 + '%';
+                k.style.animationDelay = Math.random() * 4 + 's';
+                document.body.appendChild(k);
+                setTimeout(() => k.remove(), 10000);
+            }
+        });
+
+        const noBtn = document.getElementById('no');
+        const charNo = document.getElementById('char-no');
+        let mouseX = 0, mouseY = 0;
+
+        document.body.addEventListener('pointermove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            const rect = noBtn.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = cx - mouseX;
+            const dy = cy - mouseY;
+            const dist = Math.hypot(dx, dy);
+
+            if (dist < 140) {
+                const angle = Math.atan2(dy, dx);
+                const push = 220 / (dist + 50);
+                let nx = cx + Math.cos(angle) * push;
+                let ny = cy + Math.sin(angle) * push;
+                nx = Math.max(100, Math.min(window.innerWidth - 100, nx));
+                ny = Math.max(100, Math.min(window.innerHeight - 100, ny));
+
+                noBtn.style.left = nx + 'px';
+                noBtn.style.top = ny + 'px';
+                noBtn.style.transform = `translate(-50%, -50%) rotate(${dx > 0 ? 12 : -12}deg)`;
+
+                charNo.style.display = 'block';
+                setTimeout(() => charNo.style.display = 'none', 2200);
+            }
+        });
+    </script>
+</body>
+</html>
+
